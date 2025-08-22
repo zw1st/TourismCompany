@@ -1,0 +1,71 @@
+﻿@* @model List<IvanSusaninProject_Contracts.ViewModels.TourViewModel>
+
+@{
+    ViewData["Title"] = "Туры";
+
+}
+
+<h2 class="mb-4">Туры</h2>
+
+<div class="d-flex justify-content-end mb-3">
+    <a asp-action="Create" class="btn btn-success">Добавить тур</a>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @foreach (var tour in Model)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a asp-action="Details" asp-route-id="@tour.Id" class="text-decoration-none">@tour.Name</a>
+                    </h5>
+
+                    <p class="card-text">
+                        <strong>Город:</strong> @tour.City
+                    </p>
+
+                    <p class="card-text">
+                        <strong>Период:</strong>
+                        @tour.StartDate.ToString("dd.MM.yyyy") - @tour.EndDate.ToString("dd.MM.yyyy")
+                    </p>
+
+                    <p>
+                        <strong>Группы (@(tour.Groups?.Count ?? 0)):</strong>
+                        @if (tour.Groups != null && tour.Groups.Any())
+                        {
+                            <br>
+                            @foreach (var group in tour.Groups)
+                            {
+                                <span class="badge bg-secondary me-1 mb-1">@group.GroupName</span>
+                            }
+                        }
+                        else
+                        {
+                            <span class="text-muted">Нет групп</span>
+                        }
+                    </p>
+
+                    <p>
+                        <strong>Экскурсии (@(tour.Excursions?.Count ?? 0)):</strong>
+                        @if (tour.Excursions != null && tour.Excursions.Any())
+                        {
+                            <br>
+                            @foreach (var excursion in tour.Excursions)
+                            {
+                                <span class="badge bg-info me-1 mb-1">@excursion.ExcursionName</span>
+                            }
+                        }
+                        else
+                        {
+                            <span class="text-muted">Нет экскурсий</span>
+                        }
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Создатель: @tour.UserLogin</small>
+                </div>
+            </div>
+        </div>
+    }
+</div> *@

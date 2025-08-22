@@ -1,0 +1,87 @@
+﻿@* @model IvanSusaninProject_Contracts.BindingModels.TourBindingModel
+@{
+    ViewData["Title"] = "Создать тур";
+}
+
+<h2>Создать тур</h2>
+
+<form asp-action="Create" method="post" class="border p-4 bg-light rounded">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <input type="hidden" asp-for="ExecutorId" />
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Название тура *</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="City" class="form-label">Город *</label>
+        <input asp-for="City" class="form-control" />
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label asp-for="StartDate" class="form-label">Дата начала *</label>
+                <input asp-for="StartDate" type="date" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label asp-for="EndDate" class="form-label">Дата окончания *</label>
+                <input asp-for="EndDate" type="date" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Группы</label>
+        <select name="SelectedGroupIds" asp-items="@(ViewBag.Groups as SelectList)"
+                multiple="multiple" class="form-control" size="6">
+            <option value="">-- Выберите группы --</option>
+        </select>
+        <small class="form-text text-muted">Удерживайте Ctrl для выбора нескольких групп</small>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Экскурсии</label>
+        <select name="SelectedExcursionIds" asp-items="@(ViewBag.Excursions as SelectList)"
+                multiple="multiple" class="form-control" size="6">
+            <option value="">-- Выберите экскурсии --</option>
+        </select>
+        <small class="form-text text-muted">Удерживайте Ctrl для выбора нескольких экскурсий</small>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+    </div>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        $(document).ready(function() {
+            // Добавляем минимальную высоту для multiselect
+            $('select[multiple]').css('min-height', '150px');
+
+            // Валидация дат
+            $('form').submit(function() {
+                var startDate = new Date($('#StartDate').val());
+                var endDate = new Date($('#EndDate').val());
+
+                if (startDate > endDate) {
+                    alert('Дата начала не может быть позже даты окончания');
+                    return false;
+                }
+                return true;
+            });
+        });
+    </script>
+} *@

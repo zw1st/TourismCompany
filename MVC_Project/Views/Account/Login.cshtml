@@ -1,0 +1,39 @@
+﻿@model IvanSusaninProject_Contracts.BindingModels.UserLoginBindingModel
+
+@{
+    ViewData["Title"] = "Вход";
+}
+
+<h2 class="mb-4 text-center">Вход</h2>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form asp-action="Login" method="post" class="border p-4 rounded shadow-sm bg-light">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger mb-3" })
+
+            <div class="mb-3">
+                <label asp-for="Login" class="form-label"></label>
+                <input asp-for="Login" class="form-control" />
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Войти</button>
+        </form>
+
+        <div class="text-center mt-3">
+            <a asp-action="Register">Нет аккаунта? Зарегистрируйтесь</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

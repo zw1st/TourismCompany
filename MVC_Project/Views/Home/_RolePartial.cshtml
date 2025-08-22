@@ -1,0 +1,49 @@
+﻿@model string 
+
+@if (Model == "Executor")
+{
+    <div class="text-center">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+            <div class="col">
+                <a class="btn btn-outline-primary w-100" asp-controller="Group" asp-action="Index">Группы</a>
+            </div>
+            <div class="col">
+                <a class="btn btn-outline-primary w-100" asp-controller="Tour" asp-action="Index">Туры</a>
+            </div>
+            <div class="col">
+                <a class="btn btn-outline-primary w-100" asp-controller="Excursion" asp-action="Index">Экскурсия</a>
+			</div>
+            <div class="col">
+				<a class="btn btn-outline-primary w-100" asp-controller="Group" asp-action="Bind">Привязка группы</a>
+			</div>
+@*             <div class="col">
+                <a class="btn btn-outline-primary w-100" asp-controller="Report" asp-action="ServiceReport">Список услуг</a>
+            </div>
+            <div class="col">
+                <a class="btn btn-outline-primary w-100" asp-controller="Report" asp-action="AnimalReport">Отчет по животным</a>
+            </div> *@
+        </div>
+    </div>
+}
+else if (Model == "Guarantor")
+{
+    <div class="text-center">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+            <div class="col">
+                <a class="btn btn-outline-primary w-100" asp-controller="Place" asp-action="Index">Места</a>
+            </div>
+            <div class="col">
+                <a class="btn btn-outline-primary w-100" asp-controller="Trip" asp-action="Index">Поездки</a>
+            </div>
+            <div class="col">
+                <a class="btn btn-outline-primary w-100" asp-controller="Guide" asp-action="Index">Гиды</a>
+			</div>
+            <div class="col">
+                <a class="btn btn-outline-primary w-100" asp-controller="Guide" asp-action="Bind">Привязка гида</a>
+            </div>
+@*             <div class="col">
+				<a class="btn btn-outline-primary w-100" asp-controller="BindingGroupToPlace" asp-action="Index">Привязка группы</a>
+			</div> *@
+        </div>
+    </div>
+}

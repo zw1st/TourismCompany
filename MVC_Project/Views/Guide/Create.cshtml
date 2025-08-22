@@ -1,0 +1,32 @@
+﻿@model IvanSusaninProject_Contracts.BindingModels.GuideBindingModel
+@{
+    ViewData["Title"] = "Создать группу";
+}
+
+<h2>Создать группу</h2>
+
+<form asp-action="Create" method="post" class="border p-4 bg-light rounded">
+    <div class="mb-3">
+        <label asp-for="Fio">ФИО гида</label>
+        <input asp-for="Fio" class="form-control" />
+        <span asp-validation-for="Fio" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Experience">Опыт работы (лет)</label>
+        <input asp-for="Experience" class="form-control" type="number" min="0" />
+        <span asp-validation-for="Experience" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Age">Возраст</label>
+        <input asp-for="Age" class="form-control" type="number" min="18" />
+        <span asp-validation-for="Age" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

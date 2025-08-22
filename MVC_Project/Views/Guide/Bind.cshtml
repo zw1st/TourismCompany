@@ -1,0 +1,29 @@
+﻿@model IvanSusaninProject_Contracts.ViewModels.LinkGuideToExcursionViewModel
+
+@{
+    ViewData["Title"] = "Связать гида и экскурсию";
+}
+
+<h2>Связка гида и экскурсию</h2>
+
+<form asp-action="Bind" method="post">
+    <div class="mb-3">
+        <label for="SelectedGuideId" class="form-label">Гид</label>
+        <select asp-for="SelectedGuideId" class="form-select"
+                asp-items="@(new SelectList(Model.Guides, "Id", "Fio"))">
+            <option value="">-- выберите гида --</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="SelectedExcursionId" class="form-label">Экскурсия</label>
+        <select asp-for="SelectedExcursionId" class="form-select"
+                asp-items="@(new SelectList(Model.Excursions, "Id", "Name"))">
+            <option value="">-- выберите экскурсию --</option>
+        </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Связать</button>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Отмена</a>
+</form>

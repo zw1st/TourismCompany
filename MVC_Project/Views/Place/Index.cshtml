@@ -1,0 +1,43 @@
+﻿@model List<IvanSusaninProject_Contracts.ViewModels.PlaceViewModel>
+
+@{
+    ViewData["Title"] = "Места для посещения";
+
+}
+
+<h2 class="mb-4">Места для посещения</h2>
+
+<div class="d-flex justify-content-end mb-3">
+    <a asp-action="Create" class="btn btn-success">Добавить место</a>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @foreach (var e in Model)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a asp-action="Details" asp-route-id="@e.Id" class="text-decoration-none">@e.Name</a>
+                    </h5>
+                    <p class="card-text">
+
+                        <strong>Название:</strong> @e.Name
+                    </p>
+                    <p>
+                        <strong>Адрес:</strong> @e.Address
+                    </p>
+                    <p>
+                        <strong>Город:</strong> @e.City
+                    </p>
+                    <p>
+                        <strong>Группа:</strong> @e.GroupName
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent border-top-0 text-end">
+                    <a asp-action="Delete" asp-route-id="@e.Id" class="btn btn-sm btn-danger">Удалить</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

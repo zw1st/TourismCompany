@@ -1,0 +1,34 @@
+﻿@using IvanSusaninProject_Contracts.Enums
+@model IvanSusaninProject_Contracts.BindingModels.ExcursionBindingModel
+@{
+    ViewData["Title"] = "Создать экскурсию";
+}
+
+<h2>Создать экскурсию</h2>
+
+<form asp-action="Create" method="post" class="border p-4 bg-light rounded">
+    <div class="mb-3">
+        <label asp-for="Name">Название</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ExcursionDate">Дата экскурсии</label>
+        <input asp-for="ExcursionDate" type="datetime-local" class="form-control" />
+        <span asp-validation-for="ExcursionDate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GuideId">Гид</label>
+        <select asp-for="GuideId" asp-items="@(ViewBag.Guides as SelectList)" class="form-control">
+            <option value="">-- Выберите гида --</option>
+        </select>
+        <span asp-validation-for="GuideId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -1,0 +1,41 @@
+﻿@using IvanSusaninProject_Contracts.Enums
+@model IvanSusaninProject_Contracts.BindingModels.PlaceBindingModel
+@{
+    ViewData["Title"] = "Редактировать место";
+}
+
+<h2>Редактировать место</h2>
+
+<form asp-action="Edit" method="post" class="border p-4 bg-light rounded">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="City" class="form-label"></label>
+        <input asp-for="City" class="form-control" /> 
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Address" class="form-label"></label>
+        <input asp-for="Address" class="form-control" /> 
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GroupId">Гид</label>
+        <select asp-for="GroupId" asp-items="@(ViewBag.Groupes as SelectList)" class="form-control">
+            <option value="">-- Выберите группу --</option>
+        </select>
+        <span asp-validation-for="GroupId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

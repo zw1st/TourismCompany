@@ -1,0 +1,29 @@
+﻿@model IvanSusaninProject_Contracts.ViewModels.LinkGroupToPlaceViewModel
+
+@{
+    ViewData["Title"] = "Связать группу и место";
+}
+
+<h2>Связка группы и места</h2>
+
+<form asp-action="Bind" method="post">
+    <div class="mb-3">
+        <label for="SelectedGroupId" class="form-label">Группа</label>
+        <select asp-for="SelectedGroupId" class="form-select"
+                asp-items="@(new SelectList(Model.Groups, "Id", "Name"))">
+            <option value="">-- выберите группу --</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="SelectedPlaceId" class="form-label">Место</label>
+        <select asp-for="SelectedPlaceId" class="form-select"
+                asp-items="@(new SelectList(Model.Places, "Id", "Name"))">
+            <option value="">-- выберите место --</option>
+        </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Связать</button>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Отмена</a>
+</form>

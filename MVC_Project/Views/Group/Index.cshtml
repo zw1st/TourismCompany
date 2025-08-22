@@ -1,0 +1,40 @@
+﻿@model List<IvanSusaninProject_Contracts.ViewModels.GroupViewModel>
+
+@{
+    ViewData["Title"] = "Группы";
+
+}
+
+<h2 class="mb-4">Группы</h2>
+
+<div class="d-flex justify-content-end mb-3">
+    <a asp-action="Create" class="btn btn-success">Добавить группу</a>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @foreach (var e in Model)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a asp-action="Details" asp-route-id="@e.Id" class="text-decoration-none">@e.Name</a>
+                    </h5>
+                    <p class="card-text">
+                        <strong>Название группы:</strong> @e.Name
+                    </p>
+                    <p class="card-text">
+                        <strong>Количество людей:</strong> @e.HumanAmount
+                    </p>
+                    <p>
+                        <strong>Состав:</strong> @e.HumanType
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent border-top-0 text-end">
+                    <a asp-action="Delete" asp-route-id="@e.Id" class="btn btn-sm btn-danger">Удалить</a>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>

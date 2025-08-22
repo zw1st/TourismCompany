@@ -1,0 +1,20 @@
+﻿@model IvanSusaninProject_Contracts.BindingModels.PlaceBindingModel
+@{
+    ViewData["Title"] = "Детали места";
+}
+
+<h2>Детали места</h2>
+
+<dl class="row">
+    <dt class="col-sm-3">Название</dt>
+    <dd class="col-sm-9">@Model.Name</dd>
+
+    <dt class="col-sm-3">Город</dt>
+    <dd class="col-sm-9">@Model.City</dd>
+    <dt class="col-sm-3">Адрес</dt>
+    <dd class="col-sm-9">@Model.Address</dd>
+</dl>
+<div class="d-flex gap-2 mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Редактировать</a>
+    <a asp-action="Index" class="btn btn-secondary">Назад к списку</a>
+</div>
