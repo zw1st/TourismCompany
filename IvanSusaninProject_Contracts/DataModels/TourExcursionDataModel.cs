@@ -11,5 +11,4 @@ public class TourExcursionDataModel(string tourId, string tourName, string excur
     public string TourId { get; private set; } = tourId;
     public string TourName { get; private set; } = tourName;
     public string ExcursionId { get; private set; } = excursionId;
-    public string ExcursionName { get; private set; } = excursionName;
 }
