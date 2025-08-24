@@ -45,7 +45,7 @@ public class TripStorageContract : ITripStorageContract
         }
     }
 
-    public TripDataModel? GetElementById(string creatorId, string id)
+    public TripDataModel? GetElementById(string? creatorId, string id)
     {
         try
         {
@@ -58,14 +58,18 @@ public class TripStorageContract : ITripStorageContract
         }
     }
 
-    public List<TripDataModel> GetList(string guarantorId,DateTime? fromDate = null, DateTime? toDate = null, DateTime? tripDate = null)
+    public List<TripDataModel> GetList(string? guarantorId,DateTime? fromDate = null, DateTime? toDate = null, DateTime? tripDate = null)
     {
         try
         {
-            var query = _dbContext.Trips.Include(x => x.TripPlaces).Include(x => x.TripGuides).Where(x => x.UserId == guarantorId).AsQueryable();
+            var query = _dbContext.Trips.Include(x => x.TripPlaces).Include(x => x.TripGuides).AsQueryable();
             if (tripDate is not null)
             {
                 query = query.Where(x => x.TripDate == tripDate);
+            }
+            if (guarantorId is not null)
+            {
+                query = query.Where(x => x.UserId == guarantorId);
             }
             if (fromDate is not null && toDate is not null)
             {
@@ -84,7 +88,7 @@ public class TripStorageContract : ITripStorageContract
     {
         try
         {
-            var element = GetTripById(tripDataModel.Id, tripDataModel.GuaranderId) ?? throw new ElementNotFoundException(tripDataModel.Id);
+            var element = GetTripById(tripDataModel.Id, tripDataModel.UserId) ?? throw new ElementNotFoundException(tripDataModel.Id);
             _dbContext.Trips.Update(_mapper.Map(tripDataModel, element));
             _dbContext.SaveChanges();
         }
@@ -100,7 +104,17 @@ public class TripStorageContract : ITripStorageContract
         }
     }
 
-    
 
-    private Trip? GetTripById(string id, string creatorId) => _dbContext.Trips.Where(x => x.UserId == creatorId).FirstOrDefault(x => x.Id == id);
+
+    private Trip? GetTripById(string id, string? creatorId)
+    {
+        var query = _dbContext.Trips.AsQueryable();
+
+        if (creatorId != null)
+        {
+            query = query.Where(x => x.UserId == creatorId);
+        }
+
+        return query.FirstOrDefault(x => x.Id == id);
+    }
 }

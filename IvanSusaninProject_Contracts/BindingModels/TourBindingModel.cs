@@ -1,22 +1,28 @@
-﻿using IvanSusaninProject_Contracts.DataModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace IvanSusaninProject_Contracts.BindingModels;
 
 public class TourBindingModel
 {
-    public string? Id { get; set; }
+    public string? Id { get; set; } = Guid.NewGuid().ToString();
+
+    [Required(ErrorMessage = "Название обязательно.")]
     public string? Name { get; set; }
+
+    [Required(ErrorMessage = "Город обязателен.")]
     public string? City { get; set; }
+
+    [Required(ErrorMessage = "Дата начала обязательна.")]
     public DateTime StartDate { get; set; }
+
+    [Required(ErrorMessage = "Дата конца обязательна.")]
     public DateTime EndDate { get; set; }
-    public string? ExecutorId { get; set; }
-    public List<TourExcursionDataModel>? Excursions { get;  set; }
-    public List<TourGroupDataModel>? Groups { get;  set; }
+
+    public string? UserId { get; set; }
+
+    [Required(ErrorMessage = "Наличие групп обязательно.")]
+    public List<string>? SelectedGroupIds { get; set; }
+
+    [Required(ErrorMessage = "Наличие экскурсий обязательно.")]
+    public List<string>? SelectedExcursionIds { get; set; }
 }

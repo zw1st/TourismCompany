@@ -13,18 +13,24 @@ using System.Threading.Tasks;
 
 namespace IvanSusaninProject_BusinessLogic.Implementations;
 
-public class TourBusinessLogicsContract(ITourStorageContract tourStorageContract, ILogger logger) : ITourBusinessLogicsContract
+public class TourBusinessLogicsContract : ITourBusinessLogicsContract
 {
-    ITourStorageContract _tourStorageContract = tourStorageContract;
-    private readonly ILogger _logger = logger;
+    ITourStorageContract _tourStorageContract;
+    private readonly ILogger _logger;
 
-    public List<TourDataModel> GetAllTours(string creatorId, DateTime dateTime)
+    public TourBusinessLogicsContract(ITourStorageContract tourStorageContract, ILogger logger)
+    {
+        _tourStorageContract = tourStorageContract;
+        _logger = logger;
+    }
+
+    public List<TourDataModel> GetAllTours(string? creatorId, DateTime? dateTime)
     {
         _logger.LogInformation("GetAllPosts params");
         return _tourStorageContract.GetList(creatorId, dateTime) ?? throw new NullListException();
     }
 
-    public TourDataModel GetTourById(string createrId, string id)
+    public TourDataModel GetTourById(string? createrId, string id)
     {
         _logger.LogInformation("Get element by id: {id}", id);
         if (id.IsEmpty())

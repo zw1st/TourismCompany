@@ -6,7 +6,7 @@ public interface IGroupBusinessLogicsContract
 {
     List<GroupDataModel> GetAllGroups(string? creatorId = null);
 
-    GroupDataModel GetGroupById(string creatorId, string id);
+    GroupDataModel GetGroupById(string? creatorId, string id);
 
     void InsertGroup(GroupDataModel groupDataModel);
 

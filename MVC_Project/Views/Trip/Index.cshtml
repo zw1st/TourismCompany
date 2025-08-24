@@ -1,0 +1,71 @@
+﻿@model List<IvanSusaninProject_Contracts.ViewModels.TripViewModel>
+
+@{
+    ViewData["Title"] = "Поездки";
+
+}
+
+<h2 class="mb-4">Поездки</h2>
+
+<div class="d-flex justify-content-end mb-3">
+    <a asp-action="Create" class="btn btn-success">Добавить поездку</a>
+</div>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @foreach (var trip in Model)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a asp-action="Details" asp-route-id="@trip.Id" class="text-decoration-none"> Из @trip.StartCity в @trip.EndCity</a>
+                    </h5>
+
+                    <p class="card-text">
+                        <strong>Стартовый город:</strong> @trip.StartCity
+                    </p>
+                    <p class="card-text">
+                        <strong>Конечный город:</strong> @trip.EndCity
+                    </p>
+
+                    <p class="card-text">
+                        <strong>Дата:</strong>
+                        @trip.TripDate.ToString("dd.MM.yyyy")
+                    </p>
+
+                    <p>
+                        <strong>Места (@(trip.Places?.Count ?? 0)):</strong>
+                        @if (trip.Places != null && trip.Places.Any())
+                        {
+                            <br>
+                            @foreach (var place in trip.Places)
+                            {
+                                <span class="badge bg-secondary me-1 mb-1">@place.Name</span>
+                            }
+                        }
+                        else
+                        {
+                            <span class="text-muted">Нет мест</span>
+                        }
+                    </p>
+
+                    <p>
+                        <strong>Гиды (@(trip.Guides?.Count ?? 0)):</strong>
+                        @if (trip.Guides != null && trip.Guides.Any())
+                        {
+                            <br>
+                            @foreach (var guide in trip.Guides)
+                            {
+                                <span class="badge bg-info me-1 mb-1">@guide.Fio</span>
+                            }
+                        }
+                        else
+                        {
+                            <span class="text-muted">Нет гидов</span>
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

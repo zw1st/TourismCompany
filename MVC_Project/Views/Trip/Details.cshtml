@@ -1,0 +1,105 @@
+﻿@model IvanSusaninProject_Contracts.ViewModels.TripViewModel
+@{
+    ViewData["Title"] = "Детали поездки";
+}
+
+<h2>Детали поездки</h2>
+
+<dl class="row">
+    <dt class="col-sm-3">Стартовый город</dt>
+    <dd class="col-sm-9">@Model.StartCity</dd>
+
+    <dt class="col-sm-3">Конечный город</dt>
+    <dd class="col-sm-9">@Model.EndCity</dd>
+
+    <dt class="col-sm-3">Дата окончания</dt>
+    <dd class="col-sm-9">@Model.EndCity</dd>
+
+    <dt class="col-sm-3">Длительность</dt>
+    <dd class="col-sm-9">@Model.Duration</dd>
+</dl>
+
+<div class="mt-4">
+    <h4>Гиды в поездке (@Model.Guides.Count)</h4>
+    @if (Model.Guides != null && Model.Guides.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-2 g-3">
+            @foreach (var guid in Model.Guides)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">@guid.Fio</h5>
+                            <p class="card-text mb-1">
+                                <strong>Возраст:</strong> @guid.Age
+                            </p>
+                            <p class="card-text mb-1">
+                                <strong>Стаж:</strong> @guid.Experience
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            Нет добавленных гидов
+        </div>
+    }
+</div>
+
+<div class="mt-4">
+    <h4>Места в поездке (@Model.Places.Count)</h4>
+    @if (Model.Places != null && Model.Places.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-2 g-3">
+            @foreach (var place in Model.Places)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">@place.Name</h5>
+                            <p class="card-text mb-1">
+                                <strong>Город:</strong> @place.City)
+                            </p>
+                            <p class="card-text mb-1">
+                                <strong>Адрес:</strong> @place.Address)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            Нет добавленных экскурсий
+        </div>
+    }
+</div>
+
+<div class="d-flex gap-2 mt-4">
+    <a asp-action="Index" class="btn btn-secondary">Назад к списку</a>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.2s;
+        border: 1px solid #dee2e6;
+    }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+    h4 {
+        color: #495057;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+    }
+</style>

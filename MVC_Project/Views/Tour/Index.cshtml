@@ -1,4 +1,4 @@
-﻿@* @model List<IvanSusaninProject_Contracts.ViewModels.TourViewModel>
+﻿@model List<IvanSusaninProject_Contracts.ViewModels.TourViewModel>
 
 @{
     ViewData["Title"] = "Туры";
@@ -37,7 +37,7 @@
                             <br>
                             @foreach (var group in tour.Groups)
                             {
-                                <span class="badge bg-secondary me-1 mb-1">@group.GroupName</span>
+                                <span class="badge bg-secondary me-1 mb-1">@group.Name</span>
                             }
                         }
                         else
@@ -53,7 +53,7 @@
                             <br>
                             @foreach (var excursion in tour.Excursions)
                             {
-                                <span class="badge bg-info me-1 mb-1">@excursion.ExcursionName</span>
+                                <span class="badge bg-info me-1 mb-1">@excursion.Name</span>
                             }
                         }
                         else
@@ -68,4 +68,4 @@
             </div>
         </div>
     }
-</div> *@
+</div>

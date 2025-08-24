@@ -1,4 +1,4 @@
-﻿@* @model IvanSusaninProject_Contracts.BindingModels.TourBindingModel
+﻿@model IvanSusaninProject_Contracts.BindingModels.TourBindingModel
 @{
     ViewData["Title"] = "Создать тур";
 }
@@ -8,7 +8,7 @@
 <form asp-action="Create" method="post" class="border p-4 bg-light rounded">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <input type="hidden" asp-for="ExecutorId" />
+    <input type="hidden" asp-for="UserId" />
 
     <div class="mb-3">
         <label asp-for="Name" class="form-label">Название тура *</label>
@@ -26,7 +26,7 @@
         <div class="col-md-6">
             <div class="mb-3">
                 <label asp-for="StartDate" class="form-label">Дата начала *</label>
-                <input asp-for="StartDate" type="date" class="form-control" />
+                <input asp-for="StartDate" type="date" class="form-control"/>
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
         </div>
@@ -40,20 +40,20 @@
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Группы</label>
-        <select name="SelectedGroupIds" asp-items="@(ViewBag.Groups as SelectList)"
+        <label asp-for="SelectedGroupIds" class="form-label">Группы</label>
+        <select asp-for="SelectedGroupIds" asp-items="@(ViewBag.Groups as SelectList)"
                 multiple="multiple" class="form-control" size="6">
-            <option value="">-- Выберите группы --</option>
         </select>
+        <span asp-validation-for="SelectedGroupIds" class="text-danger"></span>
         <small class="form-text text-muted">Удерживайте Ctrl для выбора нескольких групп</small>
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Экскурсии</label>
-        <select name="SelectedExcursionIds" asp-items="@(ViewBag.Excursions as SelectList)"
+        <label asp-for="SelectedExcursionIds" class="form-label">Экскурсии</label>
+        <select asp-for="SelectedExcursionIds" asp-items="@(ViewBag.Excursions as SelectList)"
                 multiple="multiple" class="form-control" size="6">
-            <option value="">-- Выберите экскурсии --</option>
         </select>
+        <span asp-validation-for="SelectedExcursionIds" class="text-danger"></span>
         <small class="form-text text-muted">Удерживайте Ctrl для выбора нескольких экскурсий</small>
     </div>
 
@@ -84,4 +84,4 @@
             });
         });
     </script>
-} *@
+}

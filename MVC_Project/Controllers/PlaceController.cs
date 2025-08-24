@@ -28,7 +28,7 @@ public class PlaceController : Controller
     {
         var userId = GetUserId();
         var groups = _groupAdapter.GetList();
-        ViewBag.Groups = new SelectList(groups, "Id", "HumanAmount");
+        ViewBag.Groups = new SelectList(groups, "Id", "Name");
         return View();
     }
     [HttpPost]

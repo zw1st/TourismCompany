@@ -40,7 +40,7 @@ public class GroupBusinessLogicsContract(IGroupStorageContract groupStorageContr
         return _groupStorageContract.GetList(creatorId) ?? throw new NullListException();
     }
 
-    public GroupDataModel GetGroupById(string creatorId, string id)
+    public GroupDataModel GetGroupById(string? creatorId, string id)
     {
         _logger.LogInformation("Get element by id: {id}", id);
         if (id.IsEmpty())

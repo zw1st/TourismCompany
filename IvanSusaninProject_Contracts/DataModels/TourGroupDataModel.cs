@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace IvanSusaninProject_Contracts.DataModels;
 
-public class TourGroupDataModel(string tourId, string tourName, string groupId, string groupName)
+public class TourGroupDataModel(string tourId,string groupId)
 {
-    public string TourId { get; private set; } = tourId;
-    public string TourName { get; private set; } = tourName;
-    public string GroupId { get; private set; } = groupId;
-    public string GroupName { get; private set; } = groupName;
+    public string TourId { get;  set; } = tourId;
+    public string GroupId { get;  set; } = groupId;
 }

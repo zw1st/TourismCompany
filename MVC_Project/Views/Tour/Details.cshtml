@@ -1,0 +1,105 @@
+﻿@model IvanSusaninProject_Contracts.ViewModels.TourViewModel
+@{
+    ViewData["Title"] = "Детали тура";
+}
+
+<h2>Детали тура</h2>
+
+<dl class="row">
+    <dt class="col-sm-3">Название</dt>
+    <dd class="col-sm-9">@Model.Name</dd>
+
+    <dt class="col-sm-3">Город</dt>
+    <dd class="col-sm-9">@Model.City</dd>
+
+    <dt class="col-sm-3">Дата начала</dt>
+    <dd class="col-sm-9">@Model.StartDate.ToString("dd.MM.yyyy")</dd>
+
+    <dt class="col-sm-3">Дата окончания</dt>
+    <dd class="col-sm-9">@Model.EndDate.ToString("dd.MM.yyyy")</dd>
+
+    <dt class="col-sm-3">Создатель</dt>
+    <dd class="col-sm-9">@Model.UserLogin</dd>
+</dl>
+
+<!-- Секция групп -->
+<div class="mt-4">
+    <h4>Группы в туре (@Model.Groups.Count)</h4>
+    @if (Model.Groups != null && Model.Groups.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-2 g-3">
+            @foreach (var group in Model.Groups)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">@group.Name</h5>
+                            <p class="card-text mb-1">
+                                <strong>Количество человек:</strong> @group.HumanAmount
+                            </p>
+                            <p class="card-text mb-1">
+                                <strong>Тип группы:</strong> @group.HumanType
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            Нет добавленных групп
+        </div>
+    }
+</div>
+
+<!-- Секция экскурсий -->
+<div class="mt-4">
+    <h4>Экскурсии в туре (@Model.Excursions.Count)</h4>
+    @if (Model.Excursions != null && Model.Excursions.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-2 g-3">
+            @foreach (var excursion in Model.Excursions)
+            {
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">@excursion.Name</h5>
+                            <p class="card-text mb-1">
+                                <strong>Дата экскурсии:</strong> @excursion.ExcursionDate.ToString("dd.MM.yyyy HH:mm")
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            Нет добавленных экскурсий
+        </div>
+    }
+</div>
+
+<div class="d-flex gap-2 mt-4">
+    <a asp-action="Index" class="btn btn-secondary">Назад к списку</a>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.2s;
+        border: 1px solid #dee2e6;
+    }
+    .card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    h4 {
+        color: #495057;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+    }
+</style>

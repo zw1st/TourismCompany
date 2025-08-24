@@ -6,7 +6,7 @@ public interface IGuideStrorageContract
 {
     List<GuideDataModel> GetList(string? creatorId);
 
-    GuideDataModel? GetElementById(string creatorId, string id);
+    GuideDataModel? GetElementById(string? creatorId, string id);
 
     GuideDataModel? GetElementByFIO(string creatorId, string fio);
 

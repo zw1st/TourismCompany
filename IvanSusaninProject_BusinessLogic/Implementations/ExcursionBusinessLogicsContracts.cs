@@ -24,7 +24,7 @@ public class ExcursionBusinessLogicsContracts(IExcursionStorageContract excursio
         return _excursionStorageContract.GetList(creatorId, dateTime, guideId) ?? throw new NullListException();
     }
 
-    public ExcursionDataModel GetExcursionByData(string creatorId, string data)
+    public ExcursionDataModel GetExcursionByData(string? creatorId, string data)
     {
         _logger.LogInformation("Get element by data: {data}", data);
         if (data.IsEmpty())

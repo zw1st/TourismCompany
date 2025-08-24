@@ -10,11 +10,5 @@ public class PlaceViewModel
 
     public required string Name { get; set; }
 
-    public required string? GroupId { get; set; }
-
     public required string? GroupName { get; set; }
-
-    public required string UserId { get; set; }
-
-    public required string UserLogin { get; set; }
 }

@@ -8,6 +8,7 @@ using IvanSusaninProject_DataBase.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace IvanSusaninProject_DataBase.Implementations;
 
@@ -67,7 +68,7 @@ public class ExcursionStorageContract : IExcursionStorageContract
         }
     }
 
-    public ExcursionDataModel? GetElementByName(string creatorId, string name)
+    public ExcursionDataModel? GetElementByName(string? creatorId, string name)
     {
         try
         {
@@ -207,7 +208,15 @@ public class ExcursionStorageContract : IExcursionStorageContract
 
         return query.FirstOrDefault(x => x.Id == id);
     }
-    private Excursion? GetExcursionByName(string name, string creatorId) => _dbContext.Excursions.Where(x => x.UserId == creatorId).FirstOrDefault(x => x.Name == name);
+    private Excursion? GetExcursionByName(string name, string? creatorId)
+    {
+        var query = _dbContext.Excursions.AsQueryable();
+        if (creatorId is not null)
+        {
+            query = query.Where(x => x.UserId == creatorId);
+        }
+        return query.FirstOrDefault(x => x.Name == name);
+    }
 
     public void UpdElement(ExcursionDataModel excursionDataModel)
     {

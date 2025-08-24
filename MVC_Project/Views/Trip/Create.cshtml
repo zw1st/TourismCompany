@@ -1,0 +1,74 @@
+﻿@model IvanSusaninProject_Contracts.BindingModels.TripBindingModel
+@{
+    ViewData["Title"] = "Создать поездку";
+}
+
+<h2>Создать поездку</h2>
+
+<form asp-action="Create" method="post" class="border p-4 bg-light rounded">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <input type="hidden" asp-for="UserId" />
+
+    <div class="mb-3">
+        <label asp-for="StartCity" class="form-label">Начальный город *</label>
+        <input asp-for="StartCity" class="form-control" />
+        <span asp-validation-for="StartCity" class="text-danger"></span>
+    </div>    
+    
+    <div class="mb-3">
+        <label asp-for="EndCity" class="form-label">Конечный город *</label>
+        <input asp-for="EndCity" class="form-control" />
+        <span asp-validation-for="EndCity" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <div class="mb-3">
+            <label asp-for="TripDate" class="form-label">Дата начала *</label>
+            <input asp-for="TripDate" type="date" class="form-control" />
+            <span asp-validation-for="TripDate" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Duration" class="form-label">Длительность (дней)</label>
+        <input asp-for="Duration" class="form-control" type="number" min="1" />
+        <span asp-validation-for="Duration" class="text-danger"></span>
+    </div>
+
+
+    <div class="mb-3">
+        <label asp-for="SelectedPlacesIds" class="form-label">Места</label>
+        <select asp-for="SelectedPlacesIds" asp-items="@(ViewBag.Places as SelectList)"
+                multiple="multiple" class="form-control" size="6">
+            <option value="">-- Выберите места --</option>
+        </select>
+        <span asp-validation-for="SelectedPlacesIds" class="text-danger"></span>
+        <small class="form-text text-muted">Удерживайте Ctrl для выбора нескольких мест</small>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SelectedGuidesIds" class="form-label">Гиды</label>
+        <select asp-for="SelectedGuidesIds" asp-items="@(ViewBag.Guides as SelectList)"
+                multiple="multiple" class="form-control" size="6">
+            <option value="">-- Выберите экскурсии --</option>
+        </select>
+        <span asp-validation-for="SelectedGuidesIds" class="text-danger"></span>
+        <small class="form-text text-muted">Удерживайте Ctrl для выбора нескольких гидов</small>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a asp-action="Index" class="btn btn-secondary">Отмена</a>
+    </div>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    <script>
+        $(document).ready(function() {
+            // Добавляем минимальную высоту для multiselect
+            $('select[multiple]').css('min-height', '150px');
+    </script>
+}

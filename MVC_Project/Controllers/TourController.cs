@@ -1,71 +1,102 @@
-﻿//using IvanSusaninProject_Contracts.AdapterContracts;
-//using IvanSusaninProject_Contracts.BindingModels;
-//using Microsoft.AspNetCore.Mvc;
-//using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using IvanSusaninProject_Contracts.AdapterContracts;
+using IvanSusaninProject_Contracts.BindingModels;
+using IvanSusaninProject_Contracts.DataModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using MVC_Project.Adapters;
+using System.Security.Claims;
 
-//namespace MVC_Project.Controllers;
+namespace MVC_Project.Controllers;
 
-//public class TourController : Controller
-//{    
-//    private readonly IGroupAdapter _groupAdapter;
-//    private readonly ITourAdapter _tourAdapter;
-//    private readonly IExcursionAdapter _excursionAdapter;
+public class TourController : Controller
+{
+    private readonly IGroupAdapter _groupAdapter;
+    private readonly ITourAdapter _tourAdapter;
+    private readonly IExcursionAdapter _excursionAdapter;
 
 
-//    public TourController(ITourAdapter tourAdapter, IGroupAdapter groupAdapter, IExcursionAdapter excursionAdapter)
-//    {
-//        _tourAdapter = tourAdapter;
-//        _groupAdapter = groupAdapter;
-//        _excursionAdapter = excursionAdapter;
-//    }
+    public TourController(ITourAdapter tourAdapter, IGroupAdapter groupAdapter, IExcursionAdapter excursionAdapter)
+    {
+        _tourAdapter = tourAdapter;
+        _groupAdapter = groupAdapter;
+        _excursionAdapter = excursionAdapter;
+    }
 
-//    public IActionResult Index()
-//    {
-//        var tours = _tourAdapter.GetList();
-//        return View(tours);
-//    }
+    public IActionResult Index()
+    {
+        var tours = _tourAdapter.GetListWithDetails();
+        return View(tours);
+    }
 
-//    public IActionResult Create()
-//    {
-//        // Заполняем списки для выбора
-//        ViewBag.Groups = new SelectList(_groupService.GetAllGroups(), "Id", "Name");
-//        ViewBag.Excursions = new SelectList(_excursionService.GetAllExcursions(), "Id", "Name");
+    public IActionResult Create()
+    {
+        // Заполняем списки для выбора
+        ViewBag.Groups = new SelectList(_groupAdapter.GetList(), "Id", "Name");
+        ViewBag.Excursions = new SelectList(_excursionAdapter.GetList(), "Id", "Name");
 
-//        // Устанавливаем текущего пользователя
-//        var model = new TourBindingModel
-//        {
-//            ExecutorId = GetUserId()
-//        };
+        // Устанавливаем текущего пользователя
+        var model = new TourBindingModel
+        {
+            UserId = GetUserId()
+        };
 
-//        return View(model);
-//    }
+        return View(model);
+    }
 
-//    [HttpPost]
-//    public IActionResult Create(TourBindingModel model, List<string> SelectedGroupIds, List<string> SelectedExcursionIds)
-//    {
-//        if (ModelState.IsValid)
-//        {
-//            // Преобразуем выбранные ID в соответствующие модели
-//            model.Groups = SelectedGroupIds?.Select(groupId => new TourGroupBindingModel
-//            {
-//                GroupId = groupId,
-//                TourId = model.Id
-//            }).ToList();
+    [HttpPost]
+    public IActionResult Create(TourBindingModel model)
+    {
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                _tourAdapter.RegisterTourWithRelations(
+                    model,
+                    model.SelectedGroupIds,
+                    model.SelectedExcursionIds
+                );
 
-//            model.Excursions = SelectedExcursionIds?.Select(excursionId => new TourExcursionBindingModel
-//            {
-//                ExcursionId = excursionId,
-//                TourId = model.Id
-//            }).ToList();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Ошибка при создании тура: {ex.Message}");
+            }
+        }
 
-//            _tourService.CreateTour(model);
-//            return RedirectToAction("Index");
-//        }
+        ViewBag.Groups = new SelectList(_groupAdapter.GetList(), "Id", "Name");
+        ViewBag.Excursions = new SelectList(_excursionAdapter.GetList(), "Id", "Name");
 
-//        // Если модель невалидна, повторно заполняем списки
-//        ViewBag.Groups = new SelectList(_groupService.GetAllGroups(), "Id", "Name");
-//        ViewBag.Excursions = new SelectList(_excursionService.GetAllExcursions(), "Id", "Name");
+        return View(model);
+    }
 
-//        return View(model);
-//    }
-//}
+    public IActionResult Details(string id)
+    {
+        var userId = GetUserId();
+        var group = _tourAdapter.GetElement(null, id);
+        if (group == null)
+        {
+            return NotFound();
+        }
+        return View(group);
+    }
+
+    private string GetUserId()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (string.IsNullOrEmpty(userId))
+        {
+            ModelState.AddModelError("", "Не удалось определить пользователя.");
+            return null;
+        }
+
+        if (Guid.TryParse(userId, out var guidId))
+        {
+            return userId;
+        }
+
+        ModelState.AddModelError("", "Идентификатор пользователя имеет неверный формат.");
+        return null;
+    }
+}

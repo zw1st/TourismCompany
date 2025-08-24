@@ -13,6 +13,4 @@ public class ExcursionViewModel
     public DateTime ExcursionDate { get; set; }
     public required string GuideId { get; set; }
     public required string GuideName { get; set; }
-    public required string UserId { get; set; }
-    public required string UserLogin { get; set; }
 }

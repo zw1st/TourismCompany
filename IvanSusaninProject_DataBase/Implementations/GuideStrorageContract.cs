@@ -76,7 +76,7 @@ public class GuideStrorageContract : IGuideStrorageContract
         }
     }
 
-    public GuideDataModel? GetElementById(string creatorId, string id)
+    public GuideDataModel? GetElementById(string? creatorId, string id)
     {
         try
         {
@@ -130,7 +130,17 @@ public class GuideStrorageContract : IGuideStrorageContract
         }
     }
 
-    private Guide? GetGuideById(string id, string creatorId) => _dbContext.Guides.Where(x=> x.UserId == creatorId).FirstOrDefault(x => x.Id == id);
+    private Guide? GetGuideById(string id, string? creatorId)
+    {
+        var query = _dbContext.Guides.AsQueryable();
+
+        if (creatorId != null)
+        {
+            query = query.Where(x => x.UserId == creatorId);
+        }
+
+        return query.FirstOrDefault(x => x.Id == id);
+    }
 
     private Guide? GetGuideByFIO(string fio, string creatorId) => _dbContext.Guides.Where(x => x.UserId == creatorId).FirstOrDefault(x => x.Fio == fio);
 }

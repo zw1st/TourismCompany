@@ -14,17 +14,9 @@ public class TripBusinessLogicContract(ITripStorageContract tripStorageContract,
 
     private readonly ITripStorageContract _tripStorageContract = tripStorageContract;
 
-    public List<TripDataModel> GetAllTrips(string creatorId)
+    public List<TripDataModel> GetAllTrips(string? creatorId)
     {
         _logger.LogInformation("GetAllTrips params: {creatorId}", creatorId);
-        if (creatorId.IsEmpty())
-        {
-            throw new ArgumentNullException(nameof(creatorId));
-        }
-        if (!creatorId.IsGuid())
-        {
-            throw new MyValidationException("Id is not a unique identifier");
-        }
         return _tripStorageContract.GetList(creatorId) ?? throw new NullListException();
     }
 
@@ -61,22 +53,14 @@ public class TripBusinessLogicContract(ITripStorageContract tripStorageContract,
         return _tripStorageContract.GetList(creatorId, fromDate, toDate, null) ?? throw new NullListException();
     }
 
-    public TripDataModel GetTripById(string creatorId, string id)
+    public TripDataModel GetTripById(string? creatorId, string id)
     {
         _logger.LogInformation("Get element by id: {creatorId}, {data}", creatorId, id);
         if (id.IsEmpty())
         {
             throw new ArgumentNullException(nameof(id));
         }
-        if (creatorId.IsEmpty())
-        {
-            throw new ArgumentNullException(nameof(creatorId));
-        }
         if (!id.IsGuid())
-        {
-            throw new MyValidationException("Id is not a unique identifier");
-        }
-        if (!creatorId.IsGuid())
         {
             throw new MyValidationException("Id is not a unique identifier");
         }

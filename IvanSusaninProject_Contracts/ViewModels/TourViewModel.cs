@@ -16,6 +16,6 @@ public class TourViewModel
     public DateTime EndDate { get; set; }
     public required string UserId { get; set; }
     public required string UserLogin { get; set; }
-    public List<TourExcursionDataModel>? Excursions { get; set; }
-    public List<TourGroupDataModel>? Groups { get; set; }
+    public List<ExcursionShortInfo>? Excursions { get; set; }
+    public List<GroupShortInfo>? Groups { get; set; }
 }

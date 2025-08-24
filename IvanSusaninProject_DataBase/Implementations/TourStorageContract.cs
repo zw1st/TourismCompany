@@ -48,7 +48,7 @@ public class TourStorageContract : ITourStorageContract
         }
     }
 
-    public TourDataModel? GetElementById(string creatorId, string id)
+    public TourDataModel? GetElementById(string? creatorId, string id)
     {
         try
         {
@@ -96,6 +96,13 @@ public class TourStorageContract : ITourStorageContract
         }
     }
 
-    private Tour? GetTourById(string id, string creatorId) => _dbContext.Tours.Where(x => x.UserId == creatorId).FirstOrDefault(x => x.Id == id);
-
+    private Tour? GetTourById(string id, string creatorId)
+    {
+        var query = _dbContext.Tours.AsQueryable();
+        if (creatorId is not null)
+        {
+            query = query.Where(x => x.UserId == creatorId);
+        }
+        return query.FirstOrDefault(x => x.Id == id);
+    }
 }

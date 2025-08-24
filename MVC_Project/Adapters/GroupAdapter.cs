@@ -45,7 +45,7 @@ public class GroupAdapter : IGroupAdapter
         }
     }
 
-    public GroupBindingModel GetElement(string creatorId, string id)
+    public GroupBindingModel GetElement(string? creatorId, string id)
     {
         try
         {

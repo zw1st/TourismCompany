@@ -6,6 +6,7 @@ using IvanSusaninProject_Contracts.Infrastructure;
 using IvanSusaninProject_Contracts.StorageContracts;
 using IvanSusaninProject_Database;
 using IvanSusaninProject_DataBase.Implementations;
+using IvanSusaninProject_DataBase.Implementationsl;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MVC_Project.Adapters;
 using MVC_Project.Infrastructure;
@@ -58,6 +59,10 @@ builder.Services.AddSingleton<IPlaceAdapter, PlaceAdapter>();
 builder.Services.AddSingleton<ITourAdapter, TourAdapter>();
 builder.Services.AddSingleton<ITripAdapter, TripAdapter>();
 
+builder.Services.AddSingleton<ITripPlaceBusinessLogicContract, TripPlaceBusinessLogicContract>();
+builder.Services.AddSingleton<ITripGuideBusinessLogicContract, TripGuideBusinessLogicContract>();
+builder.Services.AddSingleton<ITourGroupBusinessLogicContract, TourGroupBusinessLogicContract>();
+builder.Services.AddSingleton<ITourExcursionBusinessLogicContract, TourExcursionBusinessLogicContract>();
 builder.Services.AddSingleton<IExcursionBusinessLogicsContract, ExcursionBusinessLogicsContracts>();
 builder.Services.AddSingleton<IGroupBusinessLogicsContract, GroupBusinessLogicsContract>();
 builder.Services.AddSingleton<IGuideBusinessLogicsContract, GuideBusinessLogicsContract>();
@@ -65,6 +70,10 @@ builder.Services.AddSingleton<IPlaceBusinessLogicContract, PlaceBusinessLogicCon
 builder.Services.AddSingleton<ITourBusinessLogicsContract, TourBusinessLogicsContract>();
 builder.Services.AddSingleton<ITripBusinessLogicContract, TripBusinessLogicContract>();
 
+builder.Services.AddSingleton<ITourGroupStorageContract, TourGroupStorageContract>();
+builder.Services.AddSingleton<ITourExcursionStorageContract, TourExcursionStorageContract>();
+builder.Services.AddSingleton<ITripGuideStorageContract, TripGuideStorageContract>();
+builder.Services.AddSingleton<ITripPlaceStorageContract, TripPlaceStorageContract>();
 builder.Services.AddSingleton<IExcursionStorageContract, ExcursionStorageContract>();
 builder.Services.AddSingleton<IGroupStorageContract, GroupStorageContract>();
 builder.Services.AddSingleton<IGuideStrorageContract, GuideStrorageContract>();
@@ -99,5 +108,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-
+// :)
 app.Run();

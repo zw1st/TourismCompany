@@ -35,5 +35,5 @@ public class PlaceDataModel
 
     public string UserId { get; private set; }
 
-    public string GroupName => _group?.HumanAmount + _group?.HumanType.ToString() ?? string.Empty;
+    public string GroupName => _group?.Name ?? string.Empty;
 }

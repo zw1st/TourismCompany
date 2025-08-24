@@ -14,11 +14,7 @@ public class TripViewModel
 
     public int Duration { get; set; }
 
-    public required string? GuaranderId { get; set; }
+    public List<PlaceViewModel> Places { get; set; }
 
-    public required string GuarantorLogin { get; set; }
-
-    public List<TripPlaceDataModel>? TripPlaces { get; set; }
-
-    public List<TripGuideDataModel>? TripGuides { get; set; }
+    public List<GuideViewModel> Guides { get; set; }
 }

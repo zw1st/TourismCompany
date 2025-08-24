@@ -11,10 +11,10 @@ public class UserLoginBindingModel
 {
     [Required]
     [Display(Name = "Логин")]
-    public string Login { get; set; }
+    public required string Login { get; set; }
 
     [Required]
     [DataType(DataType.Password)]
     [Display(Name = "Пароль")]
-    public string Password { get; set; }
+    public required string Password { get; set; }
 }

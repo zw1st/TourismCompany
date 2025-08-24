@@ -48,7 +48,7 @@ public class GroupStorageContract : IGroupStorageContract
         }
     }
 
-    public GroupDataModel? GetElementById(string creatorId, string id)
+    public GroupDataModel? GetElementById(string? creatorId, string id)
     {
         try
         {
@@ -101,8 +101,17 @@ public class GroupStorageContract : IGroupStorageContract
         }
     }
 
-    private Group? GetGroupById(string id, string creatorId) => _dbContext.Groups.Where(x => x.UserId == creatorId).FirstOrDefault(x => x.Id == id);
+    private Group? GetGroupById(string id, string? creatorId)
+    {
+        var query = _dbContext.Groups.AsQueryable();
 
+        if (creatorId != null)
+        {
+            query = query.Where(x => x.UserId == creatorId);
+        }
+
+        return query.FirstOrDefault(x => x.Id == id);
+    }
     public List<GroupDataModel> GetList(string? executorId)
     {
         try

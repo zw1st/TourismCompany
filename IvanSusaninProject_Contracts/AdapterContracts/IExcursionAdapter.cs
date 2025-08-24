@@ -14,7 +14,7 @@ public interface IExcursionAdapter
 {
     List<ExcursionViewModel> GetList(string? creatorId = null, DateTime? dateTime = null, string? guideId = null);
 
-    ExcursionBindingModel GetElement(string creatorId, string data);
+    ExcursionBindingModel GetElement(string? creatorId, string data);
 
     void RegisterExcursion(ExcursionBindingModel excursionModel);
 }

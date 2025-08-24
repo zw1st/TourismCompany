@@ -6,7 +6,7 @@ public interface IGroupStorageContract
 {
     List<GroupDataModel> GetList(string? creatorId = null);
 
-    GroupDataModel? GetElementById(string creatorId, string id);
+    GroupDataModel? GetElementById(string? creatorId, string id);
 
     void AddElement(GroupDataModel element);
 

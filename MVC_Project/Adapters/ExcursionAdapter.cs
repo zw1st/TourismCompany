@@ -34,7 +34,7 @@ public class ExcursionAdapter : IExcursionAdapter
         _mapper = new Mapper(config);
     }
 
-    public ExcursionBindingModel? GetElement(string creatorId, string data)
+    public ExcursionBindingModel GetElement(string? creatorId, string data)
     {
         try
         {

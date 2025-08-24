@@ -8,7 +8,7 @@ public interface IGroupAdapter
 {
     List<GroupViewModel> GetList(string? creatorId = null);
 
-    GroupBindingModel GetElement(string creatorId, string data);
+    GroupBindingModel GetElement(string? creatorId, string data);
 
     void RegisterGroup(GroupBindingModel groupModel);
 

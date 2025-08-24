@@ -11,9 +11,9 @@ public interface IExcursionStorageContract
 {
     List<ExcursionDataModel> GetList(string creatorId, DateTime? dateTime, string? guideId);
 
-    ExcursionDataModel? GetElementById(string creatorId, string id);
+    ExcursionDataModel? GetElementById(string? creatorId, string id);
 
-    ExcursionDataModel? GetElementByName(string creatorId, string name);
+    ExcursionDataModel? GetElementByName(string? creatorId, string name);
 
     void AddElement(ExcursionDataModel element);
     void UpdElement(ExcursionDataModel element);
