@@ -6,15 +6,20 @@ namespace IvanSusaninProject_BusinessLogic.OfficePackage;
 
 public class OpenXmlExcelBuilder : BaseExcelBuilder
 {
-    private readonly SheetData _sheetData;
+    private  SheetData _sheetData;
 
-    private readonly MergeCells _mergeCells;
+    private  MergeCells _mergeCells;
 
-    private readonly Columns _columns;
+    private  Columns _columns;
 
     private uint _rowIndex = 0;
 
     public OpenXmlExcelBuilder()
+    {
+        Reset();
+    }
+
+    private void Reset()
     {
         _sheetData = new SheetData();
         _mergeCells = new MergeCells();
@@ -77,24 +82,17 @@ public class OpenXmlExcelBuilder : BaseExcelBuilder
         {
             CreateCell(j, _rowIndex, data.First()[j], StyleIndex.BoldTextWithBorder);
         }
-
         _rowIndex++;
-        for (var i = 1; i < data.Count - 1; ++i)
+
+        for (var i = 1; i < data.Count; ++i)
         {
             for (var j = 0; j < data[i].Length; ++j)
             {
                 CreateCell(j, _rowIndex, data[i][j], StyleIndex.SimpleTextWithBorder);
             }
-
             _rowIndex++;
         }
 
-        for (var j = 0; j < data.Last().Length; ++j)
-        {
-            CreateCell(j, _rowIndex, data.Last()[j], StyleIndex.BoldTextWithBorder);
-        }
-
-        _rowIndex++;
         return this;
     }
 

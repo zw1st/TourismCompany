@@ -3,12 +3,27 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IvanSusaninProject_Contracts.DataModels;
 
-public class TripDataModel(string id, string startCity, string endCity, DateTime tripDate, int duration, string userId)
+public class TripDataModel
 {
-    public string Id { get;  set; } = id;
-    public string StartCity { get;  set; } = startCity;
-    public string EndCity { get;  set; } = endCity;
-    public DateTime TripDate {  get; set; } = tripDate;
-    public int Duration { get; set; } = duration;
-    public string UserId { get; set; } = userId;
+    public string Id { get;  set; }
+    public string StartCity { get;  set; }
+    public string EndCity { get;  set; }
+    public DateTime TripDate {  get; set; }
+    public int Duration { get; set; }
+    public string UserId { get; set; }
+    public List<TripPlaceDataModel> TripPlaces { get; private set; }
+
+    public List<TripGuideDataModel> TripGuides { get; private set; }
+
+    public TripDataModel(string id, string startCity, string endCity, DateTime tripDate, int duration, string userId, List<TripPlaceDataModel> tripPlaces, List<TripGuideDataModel> tripGuides)
+    {
+        Id = id;
+        StartCity = startCity;
+        EndCity = endCity;
+        TripDate = tripDate;
+        Duration = duration;
+        UserId = userId;
+        TripPlaces = tripPlaces;
+        TripGuides = tripGuides;
+    }
 }

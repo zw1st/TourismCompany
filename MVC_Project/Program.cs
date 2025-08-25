@@ -1,4 +1,5 @@
 using IvanSusaninProject_BusinessLogic.Implementations;
+using IvanSusaninProject_BusinessLogic.OfficePackage;
 using IvanSusaninProject_Contracts.AdapterContracts;
 using IvanSusaninProject_Contracts.BusinessLogicsContracts;
 using IvanSusaninProject_Contracts.Enums;
@@ -59,6 +60,7 @@ builder.Services.AddSingleton<IPlaceAdapter, PlaceAdapter>();
 builder.Services.AddSingleton<ITourAdapter, TourAdapter>();
 builder.Services.AddSingleton<ITripAdapter, TripAdapter>();
 
+builder.Services.AddSingleton<IReportContract, ReportContract>();
 builder.Services.AddSingleton<ITripPlaceBusinessLogicContract, TripPlaceBusinessLogicContract>();
 builder.Services.AddSingleton<ITripGuideBusinessLogicContract, TripGuideBusinessLogicContract>();
 builder.Services.AddSingleton<ITourGroupBusinessLogicContract, TourGroupBusinessLogicContract>();
@@ -83,7 +85,9 @@ builder.Services.AddSingleton<ITripStorageContract, TripStorageContract>();
 
 builder.Services.AddTransient<IvanSusaninProject_DbContext>();
 
-
+builder.Services.AddTransient<BaseWordBuilder, OpenXmlWordBuilder>();
+builder.Services.AddTransient<BaseExcelBuilder, OpenXmlExcelBuilder>();
+builder.Services.AddTransient<BasePdfBuilder, MigraDocPdfBuilder>();
 
 
 var app = builder.Build();

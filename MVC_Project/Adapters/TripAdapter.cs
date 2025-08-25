@@ -32,8 +32,21 @@ namespace MVC_Project.Adapters
             var loggerFactory = NullLoggerFactory.Instance;
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<TripBindingModel, TripDataModel>();
+                cfg.CreateMap<TripBindingModel, TripDataModel>()
+            .ConstructUsing(src => new TripDataModel(
+                src.Id,
+                src.StartCity,
+                src.EndCity,
+                src.TripDate,
+                src.Duration,
+                src.UserId,
+                new List<TripPlaceDataModel>(), // пустые списки
+                new List<TripGuideDataModel>()  // будут заполнены позже
+            ))
+            .ForMember(dest => dest.TripPlaces, opt => opt.Ignore()) // игнорируем при маппинге
+            .ForMember(dest => dest.TripGuides, opt => opt.Ignore());
                 cfg.CreateMap<TripDataModel, TripViewModel>();
+
             }, loggerFactory);
             _mapper = new Mapper(config);
             _placeBusinessLogicContract = placeBusinessLogicContract;

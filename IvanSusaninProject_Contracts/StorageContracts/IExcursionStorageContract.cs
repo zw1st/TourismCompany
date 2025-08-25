@@ -1,4 +1,5 @@
 ﻿using IvanSusaninProject_Contracts.DataModels;
+using IvanSusaninProject_Contracts.ReportModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,6 @@ public interface IExcursionStorageContract
     void AddElement(ExcursionDataModel element);
     void UpdElement(ExcursionDataModel element);
 
-    public List<ExcursionDataModel> GetExcursionsByTourIds(string executorId, List<string> tripIds);
-
-    public List<object> GetTripsWithDetailsByPeriod(DateTime startDate, DateTime endDate, string guaranderId);
+    Task<List<TripExcursionDto>> GetExcursionsByTourIds(List<string> tripIds, CancellationToken ct);
+    Task<List<TripDetailsDto>> GetTripsWithDetailsByPeriod(DateTime startDate, DateTime endDate, CancellationToken ct);
 }

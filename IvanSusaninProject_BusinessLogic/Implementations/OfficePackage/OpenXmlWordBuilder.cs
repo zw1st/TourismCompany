@@ -4,7 +4,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace IvanSusaninProject_BusinessLogic.OfficePackage;
 
-internal class OpenXmlWordBuilder : BaseWordBuilder
+public class OpenXmlWordBuilder : BaseWordBuilder
 {
     private readonly Document _document;
 
