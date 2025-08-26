@@ -40,19 +40,16 @@ public class MigraDocPdfBuilder : BasePdfBuilder
         if (data.Any(row => row.Length != columnsWidths.Length))
             throw new InvalidOperationException("Количество столбцов не соответствует ширинам");
 
-        // Создаем таблицу
         var table = new Table();
         table.Borders.Width = 0.75;
         table.Borders.Color = Colors.Black;
 
-        // Настраиваем колонки
         for (int i = 0; i < columnsWidths.Length; i++)
         {
             var column = table.AddColumn(Unit.FromCentimeter(columnsWidths[i]));
             column.Format.Alignment = ParagraphAlignment.Center;
         }
 
-        // Добавляем заголовок
         var headerRow = table.AddRow();
         headerRow.HeadingFormat = true;
         headerRow.Shading.Color = Colors.LightGray;
@@ -66,7 +63,6 @@ public class MigraDocPdfBuilder : BasePdfBuilder
             cell.Format.Alignment = ParagraphAlignment.Center;
         }
 
-        // Добавляем данные
         for (int i = 1; i < data.Count; i++)
         {
             var dataRow = table.AddRow();
@@ -80,9 +76,8 @@ public class MigraDocPdfBuilder : BasePdfBuilder
             }
         }
 
-        // Добавляем таблицу в документ
         _document.LastSection.Add(table);
-        _document.LastSection.AddParagraph(); // Пустой абзац после таблицы
+        _document.LastSection.AddParagraph(); 
 
         return this;
     }

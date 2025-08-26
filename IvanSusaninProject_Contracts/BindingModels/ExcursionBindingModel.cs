@@ -11,7 +11,6 @@ public class ExcursionBindingModel
     public DateTime ExcursionDate { get;  set; }
     public string? UserId { get;  set; }
 
-    [Required(ErrorMessage = "Выберите тип")]
     public string? GuideId { get;  set; }
     public string? GuideName { get; set; }
 }

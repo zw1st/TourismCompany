@@ -15,7 +15,6 @@ public class PlaceBindingModel
     [Required(ErrorMessage = "Название обязательно.")]
     public string? Name { get; set; }
 
-    [Required(ErrorMessage = "Группы обязательны.")]
     public string? GroupId { get; set; }
 
     public required string GroupName {  get; set; }
