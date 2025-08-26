@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IvanSusaninProject_Contracts.BindingModels.ReportBindingModels;
 
-public class TourRequestReportBindingModel
+public class RequestReportBindingModel
 {
     [Display(Name = "С какой даты")]
     [Required]

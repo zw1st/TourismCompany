@@ -1,0 +1,181 @@
+﻿@model IvanSusaninProject_Contracts.BindingModels.ReportBindingModels.RequestReportBindingModel;
+@{
+    ViewBag.Title = "Отчет по турам";
+}
+
+<h2>Формирование отчета по турам</h2>
+
+<form id="reportForm">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" type="date" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" type="date" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group mt-3">
+        <button type="button" id="generateReportBtn" class="btn btn-primary me-2">
+            <i class="bi bi-file-earmark-text"></i> Сформировать отчет
+        </button>
+        <button type="button" id="previewBtn" class="btn btn-info me-2" disabled>
+            <i class="bi bi-eye"></i> Предпросмотр
+        </button>
+        <button type="button" id="sendEmailBtn" class="btn btn-success" disabled>
+            <i class="bi bi-envelope"></i> Отправить по email
+        </button>
+        <input type="hidden" id="reportFileName" name="FileName" /> 
+    </div>
+</form>
+
+<!-- Контейнер предпросмотра -->
+<div id="previewContainer" class="mt-4 d-none">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h4 class="mb-0">Предпросмотр отчета</h4>
+        <button id="downloadFromPreview" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-download"></i> Скачать
+        </button>
+    </div>
+    <div class="ratio ratio-1x1">
+        <iframe id="pdfPreview" class="border rounded" style="height: 70vh;"></iframe>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        let reportGenerated = false;
+        let reportBlobUrl = null;
+
+        document.getElementById('generateReportBtn').addEventListener('click', async function () {
+            const form = document.getElementById('reportForm');
+            const generateBtn = this;
+
+            if (!form.checkValidity()) {
+                form.classList.add('was-validated');
+                return;
+            }
+
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Формирование...';
+
+            try {
+                const formData = new FormData(form);
+
+                // Получаем имя файла отчета
+                const response = await fetch('@Url.Action("TourReport")', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(await response.text() || 'Ошибка сервера');
+                }
+
+                const result = await response.json();
+                const fileName = result.fileName;
+
+                // Получаем файл отчета (PDF) для предпросмотра
+                const previewResponse = await fetch('@Url.Action("TourReport")?preview=true', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!previewResponse.ok) {
+                    throw new Error(await previewResponse.text() || 'Ошибка при получении предпросмотра');
+                }
+
+                const blob = await previewResponse.blob();
+                reportBlobUrl = URL.createObjectURL(blob);
+                reportGenerated = true;
+
+                // Сохраняем имя файла для дальнейшей отправки
+                document.getElementById('reportFileName').value = fileName;
+
+                // Включаем кнопки
+                document.getElementById('previewBtn').disabled = false;
+                document.getElementById('sendEmailBtn').disabled = false;
+
+                alert('Отчет успешно сформирован.');
+            } catch (error) {
+                alert('Ошибка: ' + error.message);
+                console.error(error);
+            } finally {
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = '<i class="bi bi-file-earmark-text"></i> Сформировать отчет';
+            }
+        });
+
+        document.getElementById('previewBtn').addEventListener('click', function () {
+            if (!reportGenerated) {
+                alert('Сначала сформируйте отчет');
+                return;
+            }
+
+            document.getElementById('pdfPreview').src = reportBlobUrl;
+            document.getElementById('previewContainer').classList.remove('d-none');
+            document.getElementById('previewContainer').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.getElementById('downloadFromPreview').addEventListener('click', function () {
+            if (!reportBlobUrl) {
+                alert('Сначала сформируйте отчет');
+                return;
+            }
+
+            const a = document.createElement('a');
+            a.href = reportBlobUrl;
+            a.download = document.getElementById('reportFileName').value || `Отчет_${new Date().toISOString().slice(0, 10)}.pdf`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        });
+
+        // Отправка email без модалки
+        document.getElementById('sendEmailBtn').addEventListener('click', async function () {
+            if (!reportGenerated) {
+                alert('Сначала сформируйте отчет');
+                return;
+            }
+            const data = {
+                StartDate: document.querySelector('input[name="StartDate"]').value,
+                EndDate: document.querySelector('input[name="EndDate"]').value,
+                FileName: document.getElementById('reportFileName').value
+            };
+
+
+            const fileName = document.getElementById('reportFileName').value;
+            try {
+                const response = await fetch('@Url.Action("SendTourReportByEmail")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                console.log(fileName + "  Имя файла");
+
+
+                if (!response.ok) {
+                    throw new Error(await response.text() || 'Ошибка при отправке');
+                }
+
+                alert('Отчет успешно отправлен по электронной почте.');
+            } catch (error) {
+                alert('Ошибка: ' + error.message);
+                console.error(error);
+            }
+        });
+    </script>
+}

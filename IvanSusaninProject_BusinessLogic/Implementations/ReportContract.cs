@@ -71,7 +71,7 @@ public class ReportContract(
             .AddTable([3000, 5000], tableData)
             .Build();
     }
-    public async Task<Stream> CreateWordDocumentTripsDetailsByPeriod(DateTime startDate, DateTime endDate, CancellationToken ct)
+    public async Task<Stream> CreatePdfDocumentTripsDetailsByPeriod(DateTime startDate, DateTime endDate, CancellationToken ct)
     {
         var data = await GetTripsDetailsByPeriod(startDate, endDate, ct);
 
@@ -87,7 +87,7 @@ public class ReportContract(
         {
             var groups = string.Join(", ",
                 tripDetail.Places
-                    .Select(p => p.Group?.HumanType.ToString() + " " + p.Group?.HumanAmount.ToString())
+                    .Select(p => p.Group?.Name)
                     .Where(name => !string.IsNullOrEmpty(name))
                     .Distinct());
 
@@ -103,10 +103,10 @@ public class ReportContract(
             ]);
         }
 
-        BaseWordBuilder bwd = new OpenXmlWordBuilder();
+        BasePdfBuilder bwd = new MigraDocPdfBuilder();
         return bwd
             .AddHeader($"Обзор поездок за период с {startDate:dd.MM.yyyy} по {endDate:dd.MM.yyyy}")
-            .AddTable([3000, 3000, 3000], tableData)
+            .AddTable([4, 4, 4], tableData)
             .Build();
     }
     public async Task<Stream> CreateWordDocumentPlacesByTours(List<string> tourIds, CancellationToken ct)
@@ -134,7 +134,7 @@ public class ReportContract(
             .AddTable([3000, 5000], tableData)
             .Build();
     }
-    public async Task<Stream> CreateWordDocumentToursDetailsByPeriod(DateTime startDate, DateTime endDate, CancellationToken ct)
+    public async Task<Stream> CreatePdfDocumentToursDetailsByPeriod(DateTime startDate, DateTime endDate, CancellationToken ct)
     {
         var data = await GetToursDetailsByPeriod(startDate, endDate, ct);
 
@@ -156,7 +156,7 @@ public class ReportContract(
 
             var groups = string.Join(", ",
                 tourDetail.Groups
-                    .Select(g => g.HumanType.ToString() + " " + g.HumanAmount.ToString()));
+                    .Select(g => g.Name).Distinct());
 
             tableData.Add(
             [
@@ -166,10 +166,10 @@ public class ReportContract(
             ]);
         }
 
-        BaseWordBuilder bwd = new OpenXmlWordBuilder();
+        BasePdfBuilder bwd = new MigraDocPdfBuilder();
         return bwd
             .AddHeader($"Обзор туров за период с {startDate:dd.MM.yyyy} по {endDate:dd.MM.yyyy}")
-            .AddTable([3000, 3000, 3000], tableData)
+            .AddTable([4, 4, 4], tableData)
             .Build();
     }
     public async Task<Stream> CreateExcelDocumentExcursionsByTrips(List<string> tripIds, CancellationToken ct)

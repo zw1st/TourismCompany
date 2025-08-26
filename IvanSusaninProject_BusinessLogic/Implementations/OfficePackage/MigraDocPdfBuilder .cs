@@ -1,5 +1,6 @@
 ﻿using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Shapes.Charts;
+using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
 using System.Text;
 
@@ -25,6 +26,64 @@ public class MigraDocPdfBuilder : BasePdfBuilder
     public override BasePdfBuilder AddParagraph(string text)
     {
         _document.LastSection.AddParagraph(text, "Normal");
+        return this;
+    }
+
+    public override BasePdfBuilder AddTable(int[] columnsWidths, List<string[]> data)
+    {
+        if (columnsWidths == null || columnsWidths.Length == 0)
+            throw new ArgumentNullException(nameof(columnsWidths));
+
+        if (data == null || data.Count == 0)
+            throw new ArgumentNullException(nameof(data));
+
+        if (data.Any(row => row.Length != columnsWidths.Length))
+            throw new InvalidOperationException("Количество столбцов не соответствует ширинам");
+
+        // Создаем таблицу
+        var table = new Table();
+        table.Borders.Width = 0.75;
+        table.Borders.Color = Colors.Black;
+
+        // Настраиваем колонки
+        for (int i = 0; i < columnsWidths.Length; i++)
+        {
+            var column = table.AddColumn(Unit.FromCentimeter(columnsWidths[i]));
+            column.Format.Alignment = ParagraphAlignment.Center;
+        }
+
+        // Добавляем заголовок
+        var headerRow = table.AddRow();
+        headerRow.HeadingFormat = true;
+        headerRow.Shading.Color = Colors.LightGray;
+        headerRow.VerticalAlignment = VerticalAlignment.Center;
+
+        for (int i = 0; i < data[0].Length; i++)
+        {
+            var cell = headerRow.Cells[i];
+            cell.AddParagraph(data[0][i]);
+            cell.Format.Font.Bold = true;
+            cell.Format.Alignment = ParagraphAlignment.Center;
+        }
+
+        // Добавляем данные
+        for (int i = 1; i < data.Count; i++)
+        {
+            var dataRow = table.AddRow();
+            dataRow.VerticalAlignment = VerticalAlignment.Center;
+
+            for (int j = 0; j < data[i].Length; j++)
+            {
+                var cell = dataRow.Cells[j];
+                cell.AddParagraph(data[i][j]);
+                cell.Format.Alignment = ParagraphAlignment.Left;
+            }
+        }
+
+        // Добавляем таблицу в документ
+        _document.LastSection.Add(table);
+        _document.LastSection.AddParagraph(); // Пустой абзац после таблицы
+
         return this;
     }
 

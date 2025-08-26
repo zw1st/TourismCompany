@@ -15,7 +15,7 @@ public interface IReportContract
 
     // Отчет со сведениями за период по поездкам
     Task<List<TripDetailsDto>> GetTripsDetailsByPeriod(DateTime startDate, DateTime endDate, CancellationToken ct);
-    Task<Stream> CreateWordDocumentTripsDetailsByPeriod(DateTime startDate, DateTime endDate, CancellationToken ct);
+    Task<Stream> CreatePdfDocumentTripsDetailsByPeriod(DateTime startDate, DateTime endDate, CancellationToken ct);
     Task<Stream> CreateExcelDocumentTripsDetailsByPeriod(DateTime startDate, DateTime endDate, CancellationToken ct);
 
 
@@ -24,7 +24,7 @@ public interface IReportContract
     Task<Stream> CreateWordDocumentPlacesByTours(List<string> tourIds, CancellationToken ct);
 
 
-    Task<Stream> CreateWordDocumentToursDetailsByPeriod(DateTime startDate, DateTime endDate, CancellationToken ct);
+    Task<Stream> CreatePdfDocumentToursDetailsByPeriod(DateTime startDate, DateTime endDate, CancellationToken ct);
     Task<List<TourDetailsDto>> GetToursDetailsByPeriod(DateTime startDate, DateTime endDate, CancellationToken ct);
     Task<Stream> CreateExcelDocumentToursDetailsByPeriod(DateTime startDate, DateTime endDate, CancellationToken ct);
 }

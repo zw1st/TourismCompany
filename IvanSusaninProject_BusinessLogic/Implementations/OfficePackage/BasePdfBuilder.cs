@@ -8,5 +8,7 @@ public abstract class BasePdfBuilder
 
     public abstract BasePdfBuilder AddPieChart(string title, List<(string Caption, double Value)> data);
     
+    public abstract BasePdfBuilder AddTable(int[] columnsWidths, List<string[]> data);
+
     public abstract Stream Build();
 }
