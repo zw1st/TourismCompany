@@ -24,7 +24,8 @@ public class TourController : Controller
 
     public IActionResult Index()
     {
-        var tours = _tourAdapter.GetListWithDetails();
+        var userId = GetUserId();
+        var tours = _tourAdapter.GetListWithDetails(userId);
         return View(tours);
     }
 

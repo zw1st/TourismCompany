@@ -1,5 +1,4 @@
-﻿using IvanSusaninProject_Contracts.AdapterContracts.OperationResponses;
-using IvanSusaninProject_Contracts.BindingModels;
+﻿using IvanSusaninProject_Contracts.BindingModels;
 using IvanSusaninProject_Contracts.DataModels;
 using IvanSusaninProject_Contracts.ViewModels;
 using System;

@@ -22,7 +22,8 @@ public class TripController : Controller
 
     public IActionResult Index()
     {
-        var trips = _tripAdapter.GetListWithDetails();
+        var userId = GetUserId();
+        var trips = _tripAdapter.GetListWithDetails(userId);
         return View(trips);
     }
 

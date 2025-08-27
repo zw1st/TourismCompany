@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using IvanSusaninProject_Contracts.AdapterContracts;
-using IvanSusaninProject_Contracts.AdapterContracts.OperationResponses;
+
 using IvanSusaninProject_Contracts.BindingModels;
 using IvanSusaninProject_Contracts.BusinessLogicsContracts;
 using IvanSusaninProject_Contracts.DataModels;

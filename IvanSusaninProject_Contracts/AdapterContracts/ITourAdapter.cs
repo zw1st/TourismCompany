@@ -1,4 +1,4 @@
-﻿using IvanSusaninProject_Contracts.AdapterContracts.OperationResponses;
+﻿
 using IvanSusaninProject_Contracts.BindingModels;
 using IvanSusaninProject_Contracts.ViewModels;
 using System;
@@ -15,5 +15,5 @@ public interface ITourAdapter
     TourViewModel GetElement(string? creatorId, string data);
     void RegisterTour(TourBindingModel tourModel);
     public void RegisterTourWithRelations(TourBindingModel model, List<string> groupIds, List<string> excursionIds);
-    public List<TourViewModel> GetListWithDetails();
+    public List<TourViewModel> GetListWithDetails(string userId);
 }

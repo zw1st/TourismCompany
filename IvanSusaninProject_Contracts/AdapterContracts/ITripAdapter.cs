@@ -1,4 +1,4 @@
-﻿using IvanSusaninProject_Contracts.AdapterContracts.OperationResponses;
+﻿
 using IvanSusaninProject_Contracts.BindingModels;
 using IvanSusaninProject_Contracts.ViewModels;
 
@@ -14,5 +14,5 @@ public interface ITripAdapter
     void ChangeTripInfo(TripBindingModel model);
 
     public void RegisterTripWithRelations(TripBindingModel model, List<string> placeIds, List<string> guideIds);
-    public List<TripViewModel> GetListWithDetails();
+    public List<TripViewModel> GetListWithDetails(string userId);
 }

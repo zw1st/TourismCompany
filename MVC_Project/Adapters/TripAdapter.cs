@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using IvanSusaninProject_Contracts.AdapterContracts;
-using IvanSusaninProject_Contracts.AdapterContracts.OperationResponses;
+
 using IvanSusaninProject_Contracts.BindingModels;
 using IvanSusaninProject_Contracts.BusinessLogicsContracts;
 using IvanSusaninProject_Contracts.DataModels;
@@ -145,11 +145,11 @@ namespace MVC_Project.Adapters
             }
         }
 
-        public List<TripViewModel> GetListWithDetails()
+        public List<TripViewModel> GetListWithDetails(string userId)
         {
             try
             {
-                var trips = _tripBusinessLogicContract.GetAllTrips(null);
+                var trips = _tripBusinessLogicContract.GetAllTrips(userId);
 
                 if (!trips.Any())
                     return new List<TripViewModel>();

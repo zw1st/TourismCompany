@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using IvanSusaninProject_Contracts.AdapterContracts.OperationResponses;
+
 using IvanSusaninProject_Contracts.AdapterContracts;
 using IvanSusaninProject_Contracts.BindingModels;
 using IvanSusaninProject_Contracts.BusinessLogicsContracts;
@@ -158,10 +158,10 @@ public class TourAdapter : ITourAdapter
             throw;
         }
     }
-    public List<TourViewModel> GetListWithDetails()
+    public List<TourViewModel> GetListWithDetails(string userId)
     {
         // 1. Получаем все туры
-        var tours = _dbContext.Tours
+        var tours = _dbContext.Tours.Where(t => t.UserId == userId)
             .AsNoTracking()
             .ToList();
 
